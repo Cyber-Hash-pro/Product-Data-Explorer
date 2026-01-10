@@ -14,7 +14,12 @@ datasource db {
 }
 
 model Product {
-  id    String @id @default(uuid())
-  title String
-  price Int
+  id            String   @id @default(uuid())
+  sourceId      String   @unique
+  title         String
+  author        String?
+  price         Float
+  imageUrl      String?
+  sourceUrl     String   @unique
+  createdAt     DateTime @default(now())
 }
