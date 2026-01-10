@@ -1,22 +1,54 @@
 import { PlaywrightCrawler } from 'crawlee';
 
-export async function scrapeProductPage(url: string) {
-  let productData: any = null;
+export interface ScrapedProduct {
+  sourceId: string;
+  title: string;
+  author: string | null;
+  price: number | null;
+  imageUrl: string | null;
+}
+
+export async function scrapeProductPage(
+  url: string,
+): Promise<ScrapedProduct> {
+  let productData: ScrapedProduct | null = null;
 
   const crawler = new PlaywrightCrawler({
     maxRequestsPerCrawl: 1,
     navigationTimeoutSecs: 90,
 
     async requestHandler({ page, request, log }) {
-      log.info(`Scraping: ${request.url}`);
+      log.info(`Scraping product page: ${request.url}`);
 
-      // ✅ wait for page
+      // ✅ wait until DOM is ready
       await page.waitForLoadState('domcontentloaded');
 
-      // ✅ title
-      const title = await page.locator('h1').first().innerText();
+      /* ---------------- TITLE ---------------- */
+      const rawTitle = await page.locator('h1').first().innerText();
+      const title = rawTitle.split('\n')[0].trim();
 
-      // ✅ price (safe)
+      /* ---------------- AUTHOR ---------------- */
+      let author: string | null = null;
+
+      // Strategy 1: "by Author" in title (fallback)
+      if (rawTitle.toLowerCase().includes('by')) {
+        const parts = rawTitle.split(/by/i);
+        author = parts[1]?.trim() || null;
+      }
+
+      // Strategy 2: author link (preferred if exists)
+      if (!author) {
+        try {
+          author = await page
+            .locator('a[href*="/collections/authors"]')
+            .first()
+            .innerText({ timeout: 3000 });
+        } catch {
+          log.info('Author not found via link selector');
+        }
+      }
+
+      /* ---------------- PRICE ---------------- */
       let price: number | null = null;
       try {
         const priceText = await page
@@ -29,17 +61,35 @@ export async function scrapeProductPage(url: string) {
         log.info('Price not found, setting as null');
       }
 
-      // ✅ image (safe)
+      /* ---------------- IMAGE ---------------- */
       let imageUrl: string | null = null;
       try {
-        imageUrl = await page.locator('img').first().getAttribute('src');
+        // Prefer product images, not logo
+        imageUrl =
+          (await page
+            .locator('img[src*="/products/"], img[data-src*="/products/"]')
+            .first()
+            .getAttribute('src')) ||
+          (await page
+            .locator('img[data-src*="/products/"]')
+            .first()
+            .getAttribute('data-src'));
       } catch {
-        log.info('Image not found');
+        log.info('Product image not found');
       }
 
+      // normalize protocol-relative URLs
+      if (imageUrl?.startsWith('//')) {
+        imageUrl = `https:${imageUrl}`;
+      }
+
+      /* ---------------- SOURCE ID ---------------- */
+      const sourceId = request.url.split('/').pop() ?? 'unknown';
+
       productData = {
-        sourceId: request.url.split('/').pop(),
+        sourceId,
         title,
+        author,
         price,
         imageUrl,
       };
