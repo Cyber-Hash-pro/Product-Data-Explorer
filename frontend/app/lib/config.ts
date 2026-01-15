@@ -4,7 +4,7 @@
  */
 
 // Backend API URL - uses environment variable or defaults to localhost:3000
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://product-data-explorer-qom4.onrender.com';
 
 // API Endpoints
 export const API_ENDPOINTS = {
