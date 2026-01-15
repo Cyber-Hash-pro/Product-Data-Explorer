@@ -22,11 +22,11 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Ambient glow effect */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 rounded-3xl blur-xl opacity-20 pointer-events-none"></div>
+        <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-[#2D2D2D] to-cyan-500 rounded-3xl blur-xl opacity-20 pointer-events-none"></div>
 
         <div className="relative">
           {/* Header */}
-          <div className="sticky top-0 z-10 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 text-white p-6 rounded-t-3xl">
+          <div className="sticky top-0 z-10 bg-gradient-to-r from-indigo-600 via-[#2D2D2D] to-indigo-600 text-white p-6 rounded-t-3xl">
             <div className="absolute inset-0 opacity-10 rounded-t-3xl" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 15h30M15 0v30' stroke='%23ffffff' stroke-opacity='0.5' fill='none'/%3E%3C/svg%3E\")" }}></div>
             <div className="relative flex justify-between items-start">
               <div className="flex-1 pr-4">
@@ -73,8 +73,8 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                   )}
                 </div>
 
-                <div className="relative overflow-hidden bg-gradient-to-r from-indigo-500/10 to-purple-500/10 p-6 rounded-2xl border border-indigo-500/20">
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5"></div>
+                <div className="relative overflow-hidden bg-gradient-to-r from-indigo-500/10 to-[#2D2D2D]/10 p-6 rounded-2xl border border-indigo-500/20">
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-[#2D2D2D]/5"></div>
                   <div className="relative">
                     <div className="text-sm text-zinc-500 mb-1">Price</div>
                     <div className="text-4xl font-bold gradient-text">
@@ -95,8 +95,8 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                   rel="noopener noreferrer"
                   className="group mt-4 w-full block text-center relative overflow-hidden rounded-xl py-3 font-semibold transition-all duration-300"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-[#2D2D2D]"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-[#2D2D2D] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <span className="relative text-white flex items-center justify-center gap-2">
                     View on Original Site
                     <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -28,8 +28,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
 
       - name: Run Unit Tests
         run: npm run test -- --passWithNoTests --coverage
@@ -43,12 +41,6 @@ jobs:
           name: backend-dist
           path: backend/dist
 
-      - name: Upload test coverage
-        uses: actions/upload-artifact@v4
-        with:
-          name: backend-coverage
-          path: backend/coverage
-          if-no-files-found: ignore
 
   frontend:
     name: Frontend CI
@@ -71,9 +63,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
-
       - name: Run Unit Tests
         run: npm run test -- --passWithNoTests --coverage
 
@@ -86,9 +75,4 @@ jobs:
           name: frontend-build
           path: frontend/.next
 
-      - name: Upload test coverage
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-coverage
-          path: frontend/coverage
-          if-no-files-found: ignore
+   

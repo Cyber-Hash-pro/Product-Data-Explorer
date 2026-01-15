@@ -140,7 +140,7 @@ export default function ProductFilters({
 function FilterTag({ label, color }: { label: string; color: 'indigo' | 'purple' }) {
   const colorClasses = {
     indigo: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30',
-    purple: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+    purple: 'bg-[#2D2D2D]/20 text-zinc-300 border-[#2D2D2D]/30',
   };
 
   return (

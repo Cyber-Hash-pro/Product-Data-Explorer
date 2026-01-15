@@ -49,8 +49,8 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
         {/* Price Badge */}
         <div className="absolute top-3 right-3 z-20">
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur-md opacity-60" />
-            <div className="relative bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-1.5 rounded-full font-bold text-sm shadow-xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-[#2D2D2D] rounded-full blur-md opacity-60" />
+            <div className="relative bg-gradient-to-r from-indigo-500 to-[#2D2D2D] text-white px-4 py-1.5 rounded-full font-bold text-sm shadow-xl">
               £{product.price.toFixed(2)}
             </div>
           </div>

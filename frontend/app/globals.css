@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0f;
+  --background: #212121;
   --foreground: #e4e4e7;
   --card-bg: #13131a;
   --card-border: #1f1f2e;
   --accent-primary: #6366f1;
-  --accent-secondary: #a855f7;
+  --accent-secondary: #2D2D2D;
   --accent-tertiary: #06b6d4;
 }
 
@@ -32,7 +32,7 @@ body {
 
 /* Gradient Text */
 .gradient-text {
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #06b6d4 100%);
+  background: linear-gradient(135deg, #6366f1 0%, #2D2D2D 50%, #06b6d4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -44,11 +44,11 @@ body {
 }
 
 .glow-md {
-  box-shadow: 0 0 40px rgba(99, 102, 241, 0.2), 0 0 80px rgba(168, 85, 247, 0.1);
+  box-shadow: 0 0 40px rgba(99, 102, 241, 0.2), 0 0 80px rgba(45, 45, 45, 0.1);
 }
 
 .glow-lg {
-  box-shadow: 0 0 60px rgba(99, 102, 241, 0.3), 0 0 120px rgba(168, 85, 247, 0.15);
+  box-shadow: 0 0 60px rgba(99, 102, 241, 0.3), 0 0 120px rgba(45, 45, 45, 0.15);
 }
 
 /* Animated Gradient Border */
@@ -62,7 +62,7 @@ body {
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, #6366f1, #a855f7, #06b6d4);
+  background: linear-gradient(135deg, #6366f1, #2D2D2D, #06b6d4);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -112,7 +112,7 @@ body {
 
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
-  50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.4), 0 0 60px rgba(168, 85, 247, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.4), 0 0 60px rgba(45, 45, 45, 0.2); }
 }
 
 @keyframes gradient-shift {
@@ -123,7 +123,7 @@ body {
 
 @keyframes border-dance {
   0%, 100% { border-color: rgba(99, 102, 241, 0.3); }
-  33% { border-color: rgba(168, 85, 247, 0.3); }
+  33% { border-color: rgba(45, 45, 45, 0.3); }
   66% { border-color: rgba(6, 182, 212, 0.3); }
 }
 
@@ -157,16 +157,16 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0f;
+  background: #212121;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #6366f1, #a855f7);
+  background: linear-gradient(to bottom, #6366f1, #2D2D2D);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #818cf8, #c084fc);
+  background: linear-gradient(to bottom, #818cf8, #2D2D2D);
 }
 
 /* Focus styles */
@@ -188,7 +188,7 @@ input:focus, select:focus, textarea:focus, button:focus {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #1d4ed8, #7e22ce);
+  background: linear-gradient(to bottom, #1d4ed8, #2D2D2D);
 }
 
 /* Text truncation utilities */
