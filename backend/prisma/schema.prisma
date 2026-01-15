@@ -14,12 +14,33 @@ datasource db {
 }
 
 model Product {
-  id            String   @id @default(uuid())
-  sourceId      String   @unique
+  id            String          @id @default(uuid())
+  sourceId      String          @unique
   title         String
   author        String?
   price         Float
   imageUrl      String?
-  sourceUrl     String   @unique
+  sourceUrl     String          @unique
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  details       ProductDetail?
+}
+
+model ProductDetail {
+  id            String   @id @default(uuid())
+  productId     String   @unique
+  description   String?  @db.Text
+  isbn          String?
+  publisher     String?
+  publicationDate String?
+  format        String?
+  pages         Int?
+  language      String?
+  dimensions    String?
+  rating        Float?
+  reviewCount   Int?
+  availability  String?
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
