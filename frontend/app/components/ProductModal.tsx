@@ -2,29 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-
-interface Product {
-  id: string;
-  title: string;
-  author: string | null;
-  price: number;
-  imageUrl: string | null;
-  sourceUrl: string;
-  createdAt: string;
-  details?: {
-    description?: string | null;
-    isbn?: string | null;
-    publisher?: string | null;
-    publicationDate?: string | null;
-    format?: string | null;
-    pages?: number | null;
-    language?: string | null;
-    dimensions?: string | null;
-    rating?: number | null;
-    reviewCount?: number | null;
-    availability?: string | null;
-  };
-}
+import type { Product } from '../lib/types';
 
 interface ProductModalProps {
   product: Product | null;
@@ -121,7 +99,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                         <svg
                           key={i}
                           className={`w-6 h-6 ${
-                            i < Math.floor(product.details.rating!)
+                            i < Math.floor(product?.details?.rating!)
                               ? 'text-yellow-400 fill-current'
                               : 'text-gray-300'
                           }`}

@@ -49,10 +49,55 @@ export async function scrapeProductPage(url: string): Promise<ScrapedProduct> {
 
     const $ = cheerio.load(response.data);
 
-    // Extract title from h1
+    // Extract title - try multiple strategies
+    let title = 'Unknown Title';
+
+    // Strategy 1: Look for product title in h1
     const h1Element = $('h1').first();
-    const rawTitle = h1Element.text();
-    const title = rawTitle.split('\n')[0]?.trim() || 'Unknown Title';
+    let rawTitle = h1Element.text().trim();
+
+    // Strategy 2: Try meta og:title
+    if (!rawTitle || rawTitle === '') {
+      rawTitle = $('meta[property="og:title"]').attr('content') || '';
+    }
+
+    // Strategy 3: Try page title
+    if (!rawTitle || rawTitle === '') {
+      rawTitle = $('title').text() || '';
+    }
+
+    // Strategy 4: Look for product-specific selectors
+    if (!rawTitle || rawTitle === '') {
+      rawTitle = $('.product-title, .product__title, [class*="product-name"]')
+        .first()
+        .text()
+        .trim();
+    }
+
+    // Strategy 5: Extract from URL as last resort
+    if (!rawTitle || rawTitle === '') {
+      const urlParts = url.split('/');
+      const lastPart = urlParts[urlParts.length - 1] || '';
+      // Convert slug to title: "salt-path-book-raynor-winn" -> "Salt Path Book"
+      rawTitle = lastPart
+        .split('-')
+        .slice(0, -1) // Remove ISBN at the end
+        .filter((word) => !word.match(/^\d+$/)) // Remove numbers
+        .filter((word) => word.toLowerCase() !== 'book') // Remove "book"
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    }
+
+    // Clean up the title - remove author part if present
+    if (rawTitle.toLowerCase().includes(' by ')) {
+      title = rawTitle.split(/\s+by\s+/i)[0]?.trim() || rawTitle;
+    } else {
+      title = rawTitle.split('\n')[0]?.trim() || rawTitle;
+    }
+
+    // Remove any "World of Books" suffix
+    title = title.replace(/\s*[-|]\s*World of Books.*$/i, '').trim();
+
     console.log(`[Scraper] Title: ${title}`);
 
     // Extract author
@@ -62,10 +107,14 @@ export async function scrapeProductPage(url: string): Promise<ScrapedProduct> {
     if (authorLink.length) {
       author = authorLink.text().trim();
     }
-    // Fallback: "by Author" pattern
+    // Fallback: "by Author" pattern in rawTitle
     if (!author && rawTitle.toLowerCase().includes('by')) {
-      const parts = rawTitle.split(/by/i);
-      author = parts[1]?.split('\n')[0]?.trim() || null;
+      const parts = rawTitle.split(/\s+by\s+/i);
+      author = parts[1]?.split('\n')[0]?.split('|')[0]?.trim() || null;
+    }
+    // Try meta author
+    if (!author) {
+      author = $('meta[name="author"]').attr('content') || null;
     }
     console.log(`[Scraper] Author: ${author}`);
 

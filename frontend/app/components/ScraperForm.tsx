@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useScraper } from '../hooks/useScraper';
 
 interface ScraperFormProps {
   onScrapeComplete: () => void;
@@ -8,40 +9,20 @@ interface ScraperFormProps {
 
 export default function ScraperForm({ onScrapeComplete }: ScraperFormProps) {
   const [url, setUrl] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const { loading, error, success, scrapeProduct, clearMessages } = useScraper();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
-    setLoading(true);
+    clearMessages();
 
-    try {
-      const response = await fetch('http://localhost:3000/scrape/product', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url }),
-      });
+    const result = await scrapeProduct(url);
 
-      if (!response.ok) {
-        throw new Error('Failed to scrape product');
-      }
-
-      const data = await response.json();
-      setSuccess(`Successfully scraped: ${data.title}`);
+    if (result) {
       setUrl('');
       setTimeout(() => {
         onScrapeComplete();
-        setSuccess('');
+        clearMessages();
       }, 2000);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
-    } finally {
-      setLoading(false);
     }
   };
 

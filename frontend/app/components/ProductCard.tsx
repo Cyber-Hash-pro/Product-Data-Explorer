@@ -2,16 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-
-interface Product {
-  id: string;
-  title: string;
-  author: string | null;
-  price: number;
-  imageUrl: string | null;
-  createdAt: string;
-  details?: any;
-}
+import type { Product } from '../lib/types';
 
 interface ProductCardProps {
   product: Product;
